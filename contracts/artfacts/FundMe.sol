@@ -6,6 +6,7 @@
 
 pragma solidity ^0.8.0;
 
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract FundMe {
       
@@ -17,6 +18,22 @@ contract FundMe {
         
           require(msg.value >= minimumUsd, "Minimum funding amount not met");  // 1e18 = 1 * 10 ** 18 == 1000000000000000000
       }
+
+      // get ETH price
+      function getPrice() public {
+          // NEED:
+          // ABI 
+          // Address: 0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e
+          AggregatorV3Interface priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e);
+          
+      }
+
+
+      // conversion rate
+      function getConversionRate() public {}
+
+
+
 
     //   function withdraw(){}
 }
