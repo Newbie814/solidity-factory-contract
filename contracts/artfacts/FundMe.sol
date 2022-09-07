@@ -18,8 +18,7 @@ contract FundMe {
       mapping(address => uint256) public addressToAmountFunded;
 
       function fund() public payable {
-          // need to be able to set a minimum fund amount in USD 
-          // 1. How do we send ETH to this contract?
+         
         
           require(msg.value.getConversionRate() >= minimumUsd, "Minimum funding amount not met");  // 1e18 = 1 * 10 ** 18 == 1000000000000000000
           funders.push(msg.sender);
@@ -30,5 +29,19 @@ contract FundMe {
 
 
 
-    //   function withdraw(){}
+       function withdraw() public {
+           // for( starting index, ending index, step amount )
+           for(uint256 funderIndex = 0; funderIndex < funders.length; funderIndex = funderIndex++ ){
+               address funder = funders[funderIndex];
+               addressToAmountFunded[funder] = 0;
+
+           }
+           funders = new address[](0);       // number in parentheses is just telling how many elements to create array with
+               // ways to send native currency from contract:
+               // transfer
+               // send
+               // call
+
+               
+       }
 }
