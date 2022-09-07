@@ -42,6 +42,18 @@ contract FundMe {
                // send
                // call
 
-               
+
+               //transfer: 
+               // payable ( msg.sender.transfer(address(this).balance))  // msg.sender is of type address, needed to typecast it to payable, which is of type payable address
+
+               // send:
+               bool sendSuccess = payable(msg.sender).send(address(this).balance);
+               require(sendSuccess, 'Send was not completed');
+
+               // call: 
+              //  (bool callSuccess, /*bytes memory dataReturned*/) = payable(msg.sender).call{value: address(this).balance}() // returns two variables (noted on left side)
+               // commented second variable out, as we don't need it. Left it in for reference. Would normally leave blank, with comma after first variable
+
+
        }
 }
