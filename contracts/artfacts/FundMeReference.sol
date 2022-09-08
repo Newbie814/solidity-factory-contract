@@ -36,10 +36,26 @@ contract FundMe {
                addressToAmountFunded[funder] = 0;
 
            }
-           //reset array
-           funders = new address[](0);      
-               (bool callSuccess, /*bytes memory dataReturned*/) = payable(msg.sender).call{value: address(this).balance}(""); 
+           funders = new address[](0);       // number in parentheses is just telling how many elements to create array with
+               // ways to send native currency from contract:
+               // transfer
+               // send
+               // call
+
+
+               //transfer: 
+               // payable ( msg.sender.transfer(address(this).balance))  // msg.sender is of type address, needed to typecast it to payable, which is of type payable address
+
+               // send:
+            //    bool sendSuccess = payable(msg.sender).send(address(this).balance);
+            //    require(sendSuccess, 'Send was not completed');
+
+               // call: 
+               (bool callSuccess, /*bytes memory dataReturned*/) = payable(msg.sender).call{value: address(this).balance}(""); // returns two variables (noted on left side)
                require(callSuccess, "Call failed");
+              
+               // commented second variable out, as we don't need it. Left it in for reference. Would normally leave blank, with comma after first variable
+
 
        }
 }
