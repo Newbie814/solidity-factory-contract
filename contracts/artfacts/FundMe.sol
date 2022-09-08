@@ -17,6 +17,13 @@ contract FundMe {
       address[] public funders;
       mapping(address => uint256) public addressToAmountFunded;
 
+      address public owner;
+
+      constructor () {
+          owner = msg.sender;
+
+      }
+
       function fund() public payable {
          
         
@@ -29,7 +36,9 @@ contract FundMe {
 
 
 
-       function withdraw() public {
+       function withdraw() public onlyOwner {
+           
+
            // for( starting index, ending index, step amount )
            for(uint256 funderIndex = 0; funderIndex < funders.length; funderIndex = funderIndex++ ){
                address funder = funders[funderIndex];
@@ -41,5 +50,10 @@ contract FundMe {
                (bool callSuccess, /*bytes memory dataReturned*/) = payable(msg.sender).call{value: address(this).balance}(""); 
                require(callSuccess, "Call failed");
 
+       }
+
+       modifier onlyOwner {
+           require(msg.sender == owner, "Sender is not the owner of this contract");
+           _;
        }
 }
